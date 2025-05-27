@@ -1,0 +1,31 @@
+spring:
+  main:
+    banner-mode: "off"
+    web-application-type: none
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  profiles:
+    include: sql
+db:
+  tables:
+    monitoring-recipients: ${MONITORING_RECIPIENTS_TABLE}
+  postgres:
+    batch_size: {POSTGRES_BATCH_SIZE:10000}
+    batch_timeout_ms: {POSTGRES_TIMEOUT_MS:1000}
+    cdm:
+      url: ${POSTGRES_CDM_URL}
+      username: ${POSTGRES_CDM_USERNAME}
+      password: ${POSTGRES_CDM_PASSWORD}
+      hikari:
+        pool-name: postgres-pool-cdm
+        minimum-idle: ${CDM_HIKARI_MINIMUM_IDLE:0}
+        maximum-pool-size: ${CDM_HIKARI_MAXIMUM_POOL_SIZE:1}
+smtp:
+  host: ${SMTP_HOST}
+  port: ${SMTP_PORT}
+  username: ${SMTP_USERNAME}
+  password: ${SMTP_PASSWORD}
+logging:
+  ${LOGGING_PATH:config=classpath:config=classpath:logback-spring.xml}
+
