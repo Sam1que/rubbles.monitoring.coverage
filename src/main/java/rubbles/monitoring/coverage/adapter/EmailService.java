@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.adapter;
+package rubbles.monitoring.coverage.adapter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +53,7 @@ public class EmailService {
             InternetAddress[] toAddresses = {new InternetAddress(email)};
 
             msg.setRecipients(Message.RecipientType.TO, toAddresses);
-            msg.setSubject("Отчет по NPS");
+            msg.setSubject("Отчет по покрытию");
             msg.setSentDate(new java.util.Date());
 
             msg.setContent(htmlBody, "text/html; charset=utf-8");
@@ -89,10 +89,10 @@ public class EmailService {
             InternetAddress[] toAddresses = {new InternetAddress(email)};
 
             msg.setRecipients(Message.RecipientType.TO, toAddresses);
-            msg.setSubject("ОШИБКА Отчет по NPS");
+            msg.setSubject("ОШИБКА Отчет по покрытию");
             msg.setSentDate(new java.util.Date());
 
-            msg.setContent("При отправке отчета по NPS произошла ошибка<br><br>", "text/html; charset=utf-8");
+            msg.setContent("При отправке отчета по покрытию произошла ошибка<br><br>", "text/html; charset=utf-8");
 
             Transport.send(msg);
         } catch (Exception e) {

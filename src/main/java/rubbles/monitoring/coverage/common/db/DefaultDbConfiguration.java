@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.common.db;
+package rubbles.monitoring.coverage.common.db;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

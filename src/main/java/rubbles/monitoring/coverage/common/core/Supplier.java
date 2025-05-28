@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.common.core;
+package rubbles.monitoring.coverage.common.core;
 
 public interface Supplier<T extends Message> {
     T get();

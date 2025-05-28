@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.common.core;
+package rubbles.monitoring.coverage.common.core;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;

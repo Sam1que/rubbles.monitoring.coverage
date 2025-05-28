@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.model;
+package rubbles.monitoring.coverage.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.config;
+package rubbles.monitoring.coverage.config;
 
 import org.springframework.boot.autoconfigure.jdbc.JdbcProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>rubbles</groupId>
-	<artifactId>commcoverage</artifactId>
+	<artifactId>coverage</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>monitoring.commcoverage</name>
+	<name>monitoring.coverage</name>
 	<description>Rubbles monitoring nps project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>

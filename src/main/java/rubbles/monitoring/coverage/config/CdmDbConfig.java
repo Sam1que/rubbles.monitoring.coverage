@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.config;
+package rubbles.monitoring.coverage.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariDataSource;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import rubbles.monitoring.commcoverage.common.db.DbService;
+import rubbles.monitoring.coverage.common.db.DbService;
 
 import javax.sql.DataSource;
 

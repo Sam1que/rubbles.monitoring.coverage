@@ -1,12 +1,13 @@
-package rubbles.monitoring.commcoverage.db;
+package rubbles.monitoring.coverage.db;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import rubbles.monitoring.commcoverage.common.db.DbService;
-import rubbles.monitoring.commcoverage.model.OfferInfoQueryResult;
+import rubbles.monitoring.coverage.common.db.DbService;
+import rubbles.monitoring.coverage.model.CommunicationCoverageQueryResult;
+import rubbles.monitoring.coverage.model.OfferInfoQueryResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,9 @@ public class DbAdapter {
     @Value("${db.tables.monitoring-recipients}")
     private String MONITORING_RECIPIENTS;
 
+    @Value("${sql.select-communication-coverage-query}")
+    private String selectCommunicationCoverageQuery;
+
     @Value("${sql.select-offer-info-query}")
     private String selectOfferInfoQuery;
 
@@ -35,6 +39,23 @@ public class DbAdapter {
             return cdmDbService.select(replaceSql(selectRecipientsQuery), (Map<String, Object>) null);
         } catch (Exception e) {
             throw new Exception("Error selecting from monitoring recipients table: " + MONITORING_RECIPIENTS + e.getMessage());
+        }
+    }
+
+    public List<CommunicationCoverageQueryResult> selectCommunicationCoverageData() throws Exception {
+        try {
+            String query = selectCommunicationCoverageQuery;
+            List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
+            return rows.stream().map(row -> new CommunicationCoverageQueryResult(
+                    (Long) row.get("GZ_SMS_COUNT"),
+                    (Long) row.get("GZ_EMAIL_COUNT"),
+                    (Long) row.get("366_SMS_COUNT"),
+                    (Long) row.get("366_EMAIL_COUNT"),
+                    (Long) row.get("KF_SMS_COUNT"),
+                    (Long) row.get("KF_EMAIL_COUNT")
+            )).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Error selecting data from database" + e.getMessage());
         }
     }
 
@@ -55,6 +76,7 @@ public class DbAdapter {
             throw new Exception("Error selecting data from database" + e.getMessage());
         }
     }
+
 
     private String replaceSql(String sql) {
         return sql

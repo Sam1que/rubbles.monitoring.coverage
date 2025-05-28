@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.common.core;
+package rubbles.monitoring.coverage.common.core;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

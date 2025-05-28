@@ -1,12 +1,12 @@
-package rubbles.monitoring.commcoverage.common.db;
+package rubbles.monitoring.coverage.common.db;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import rubbles.monitoring.commcoverage.common.core.Message;
-import rubbles.monitoring.commcoverage.common.core.Processor;
+import rubbles.monitoring.coverage.common.core.Message;
+import rubbles.monitoring.coverage.common.core.Processor;
 
 import java.util.Collections;
 import java.util.List;

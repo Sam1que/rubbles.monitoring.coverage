@@ -1,11 +1,12 @@
-package rubbles.monitoring.commcoverage.adapter;
+package rubbles.monitoring.coverage.adapter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import rubbles.monitoring.commcoverage.db.DbAdapter;
-import rubbles.monitoring.commcoverage.model.OfferInfoQueryResult;
+import rubbles.monitoring.coverage.db.DbAdapter;
+import rubbles.monitoring.coverage.model.CommunicationCoverageQueryResult;
+import rubbles.monitoring.coverage.model.OfferInfoQueryResult;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class MonitoringCommCoverageAdapter {
+public class MonitoringCoverageAdapter {
 
     @Autowired
     private DbAdapter dbAdapter;
@@ -31,6 +32,25 @@ public class MonitoringCommCoverageAdapter {
         try {
             // Collecting data for monitoring
             log.info("Getting data for communication coverage monitoring from DB...");
+
+            // Communication coverage data
+            List<CommunicationCoverageQueryResult> communicationCoverageData = dbAdapter.selectCommunicationCoverageData();
+            if (!communicationCoverageData.isEmpty()) {
+                log.info("Successfully received communication coverage data from DB");
+                log.debug("Found {} records", communicationCoverageData.size());
+                for (CommunicationCoverageQueryResult row : communicationCoverageData) {
+                    log.debug("GZ SMS count: {}, GZ Email count: {}, 366 SMS count: {}, 366 EMail count: {}, KF SMS count: {}, KF Email count: {}",
+                            row.getGzSmsCount(),
+                            row.getGzEmailCount(),
+                            row.getAptekaSmsCount(),
+                            row.getAptekaEmailCount(),
+                            row.getKfSmsCount(),
+                            row.getKfEmailCount()
+                    );
+                }
+            } else {
+                log.error("Didn't get any communication coverage data from DB");
+            }
 
             // Offer and info data
             List<OfferInfoQueryResult> offerInfoData = dbAdapter.selectOfferInfoData();
@@ -54,7 +74,7 @@ public class MonitoringCommCoverageAdapter {
 
             // Building email content and sending it ti recipients
             log.info("Building email content");
-            String emailContent = buildEmailContent(offerInfoData);
+            String emailContent = buildEmailContent(communicationCoverageData, offerInfoData);
             log.debug("Email content: {}", emailContent);
 
             log.info("Getting recipient list from table \"{}\"", MONITORING_RECIPIENTS);
@@ -74,9 +94,9 @@ public class MonitoringCommCoverageAdapter {
                 log.info("Starting sending emails to recipients");
                 for (String email : recipients) {
                     try {
-                        log.debug("Sending communication coverage monitoring to recipient with email: {}", email);
+                        log.debug("Sending coverage monitoring to recipient with email: {}", email);
                         emailService.sendEmail(email, emailContent);
-                        log.debug("Communication coverage monitoring to recipient with mail \"{}\" has been successfully sent", email);
+                        log.debug("Coverage monitoring to recipient with mail \"{}\" has been successfully sent", email);
                     } catch (Exception e) {
                         log.error(e.getMessage(), e);
                         try {
@@ -96,7 +116,7 @@ public class MonitoringCommCoverageAdapter {
         }
     }
 
-    public String buildEmailContent(List<OfferInfoQueryResult> offerInfoData) {
+    public String buildEmailContent(List<CommunicationCoverageQueryResult> communicationCoverageData, List<OfferInfoQueryResult> offerInfoData) {
         final Map<String, String> MONTH_TRANSLATIONS = Map.ofEntries(
                 Map.entry("January", "Январь"),
                 Map.entry("February", "Февраль"),
@@ -118,39 +138,86 @@ public class MonitoringCommCoverageAdapter {
                 .append("  table { border-collapse: collapse; margin: 20px 0; }")
                 .append("  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }")
                 .append("  th { background-color: #f2f2f2; }")
-                .append("  td.merged { vertical-align: middle; text-align: center; }")
+                .append("  th.main { background-color: #c0c0c0; text-align: center;}")
                 .append("  td.amount { text-align: right; }")
                 .append("</style></head><body>")
                 .append("<h4>Добрый день!</h4>")
-                .append("<p>В таблице ниже представлены данные по NPS в разрезе брендов.</p>")
-                .append("<table border='1'>")
-                .append("<tr><th>Месяц</th><th>Бренд</th><th>Количество</th></tr>");
+                .append("<p>В таблицах ниже представлены данные по покрытию.</p>");
 
+        message.append(CommunicationCoverageTableContent(communicationCoverageData));
         message.append(offerInfoTableContent(offerInfoData));
 
-        message.append("</table></body></html>");
+        message.append("</body></html>");
         return message.toString();
     }
 
-    private String offerInfoTableContent(List<OfferInfoQueryResult> offerInfoData) {
-        if (offerInfoData == null || offerInfoData.isEmpty()) {
-            return "<tr><td colspan='8'>Нет данных для отображения</td></tr>";
+    private String CommunicationCoverageTableContent(List<CommunicationCoverageQueryResult> communicationCoverageData) {
+        if (communicationCoverageData == null || communicationCoverageData.isEmpty()) {
+            return "<tr><td colspan='6'>Нет данных для отображения</td></tr>";
         }
+        // Заголовок таблицы
+        String tableHeader = "Покрытие коммуникациями";
 
-        // Заголовки столбцов (соответствуют полям класса)
+        // Заголовки столбцов таблицы
         String[] headers = {
-                "Метрика",
                 "ГЗ SMS",
                 "ГЗ Email",
-                "Аптека SMS",
-                "Аптека Email",
+                "366 SMS",
+                "366 Email",
                 "КФ SMS",
                 "КФ Email"
         };
 
         StringBuilder tableContent = new StringBuilder();
 
-        // Заголовоки таблицы
+        tableContent.append("<table border='1'>");
+        // Заголовок таблицы
+        tableContent.append("<tr>").append("<th colspan='6' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        // Заголовки столбцов таблицы
+        tableContent.append("<tr>");
+        for (String header : headers) {
+            tableContent.append("<th>").append(header).append("</th>");
+        }
+        tableContent.append("</tr>");
+        // Тело таблицы
+        for (CommunicationCoverageQueryResult row : communicationCoverageData) {
+            tableContent.append("<tr>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getGzSmsCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getGzEmailCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getAptekaSmsCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getAptekaEmailCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getKfSmsCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getKfEmailCount())).append("</td>")
+                    .append("</tr>");
+        }
+        tableContent.append("</table>");
+        return tableContent.toString();
+    }
+
+    private String offerInfoTableContent(List<OfferInfoQueryResult> offerInfoData) {
+        if (offerInfoData == null || offerInfoData.isEmpty()) {
+            return "<tr><td colspan='7'>Нет данных для отображения</td></tr>";
+        }
+        // Заголовок таблицы
+        String tableHeader = "Каскадные рассылки и Мейлы по офферу и инфо";
+
+        // Заголовки столбцов
+        String[] headers = {
+                "Метрика",
+                "ГЗ SMS",
+                "ГЗ Email",
+                "366 SMS",
+                "366 Email",
+                "КФ SMS",
+                "КФ Email"
+        };
+
+        StringBuilder tableContent = new StringBuilder();
+
+        tableContent.append("<table border='1'>");
+        // Заголовок таблицы
+        tableContent.append("<tr>").append("<th colspan='6' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        // Заголовоки полей таблицы
         tableContent.append("<tr>");
         for (String header : headers) {
             tableContent.append("<th>").append(header).append("</th>");
@@ -169,6 +236,7 @@ public class MonitoringCommCoverageAdapter {
                     .append("<td class=\"amount\">").append(formatAmount(row.getKfEmail())).append("</td>")
                     .append("</tr>");
         }
+        tableContent.append("</table>");
 
         return tableContent.toString();
     }

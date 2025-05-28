@@ -1,6 +1,6 @@
-package rubbles.monitoring.commcoverage.common.db;
+package rubbles.monitoring.coverage.common.db;
 
-import rubbles.monitoring.commcoverage.common.core.CommonException;
+import rubbles.monitoring.coverage.common.core.CommonException;
 
 public class DbException extends CommonException {
     public static final int UNKNOWN_ERROR = 1100;

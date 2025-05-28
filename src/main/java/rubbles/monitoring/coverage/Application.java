@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage;
+package rubbles.monitoring.coverage;
 
 import com.glowbyte.a366.crypt.blowfish.Encryptor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import rubbles.monitoring.commcoverage.adapter.MonitoringCommCoverageAdapter;
+import rubbles.monitoring.coverage.adapter.MonitoringCoverageAdapter;
 
 @SpringBootApplication
 @Slf4j
 public class Application implements CommandLineRunner {
 
 	@Autowired
-	private MonitoringCommCoverageAdapter monitoringNpsAdapter;
+	private MonitoringCoverageAdapter monitoringNpsAdapter;
 
 	public static void main(String[] args) {
 		parseArgs(args);

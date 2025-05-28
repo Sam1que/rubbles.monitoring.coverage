@@ -1,4 +1,4 @@
-package rubbles.monitoring.commcoverage.config;
+package rubbles.monitoring.coverage.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
