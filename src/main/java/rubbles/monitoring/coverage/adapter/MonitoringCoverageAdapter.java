@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rubbles.monitoring.coverage.db.DbAdapter;
+import rubbles.monitoring.coverage.model.CascadeCountQueryResult;
 import rubbles.monitoring.coverage.model.CommunicationCoverageQueryResult;
+import rubbles.monitoring.coverage.model.OfferCoverageQueryResult;
 import rubbles.monitoring.coverage.model.OfferInfoQueryResult;
 
 import java.text.NumberFormat;
@@ -72,9 +74,41 @@ public class MonitoringCoverageAdapter {
                 log.error("Didn't get any offer and info data from DB");
             }
 
+            // Offer coverage data
+            List<OfferCoverageQueryResult> offerCoverageData = dbAdapter.selectOfferCoverageData();
+            if (!offerInfoData.isEmpty()) {
+                log.info("Successfully received offer coverage data from DB");
+                log.debug("Found {} records", offerCoverageData.size());
+                for (OfferCoverageQueryResult row : offerCoverageData) {
+                    log.debug("Metric name: {}, GZ count: {}, 366 Count: {}",
+                            row.getMetricName(),
+                            row.getGzCount(),
+                            row.getAptekaCount()
+                    );
+                }
+            } else {
+                log.error("Didn't get any offer and info data from DB");
+            }
+
+            // Cascade count data
+            List<CascadeCountQueryResult> cascadeCountData = dbAdapter.selectCascadeCountData();
+            if (!offerInfoData.isEmpty()) {
+                log.info("Successfully received cascade count data from DB");
+                log.debug("Found {} records", cascadeCountData.size());
+                for (CascadeCountQueryResult row : cascadeCountData) {
+                    log.debug("Message desc: {}, GZ count: {}, 366 Count: {}",
+                            row.getMessageDesc(),
+                            row.getGzCount(),
+                            row.getAptekaCount()
+                    );
+                }
+            } else {
+                log.error("Didn't get any offer and info data from DB");
+            }
+
             // Building email content and sending it ti recipients
             log.info("Building email content");
-            String emailContent = buildEmailContent(communicationCoverageData, offerInfoData);
+            String emailContent = buildEmailContent(communicationCoverageData, offerInfoData, offerCoverageData, cascadeCountData);
             log.debug("Email content: {}", emailContent);
 
             log.info("Getting recipient list from table \"{}\"", MONITORING_RECIPIENTS);
@@ -116,7 +150,11 @@ public class MonitoringCoverageAdapter {
         }
     }
 
-    public String buildEmailContent(List<CommunicationCoverageQueryResult> communicationCoverageData, List<OfferInfoQueryResult> offerInfoData) {
+    public String buildEmailContent(List<CommunicationCoverageQueryResult> communicationCoverageData,
+                                    List<OfferInfoQueryResult> offerInfoData,
+                                    List<OfferCoverageQueryResult> offerCoverageData,
+                                    List<CascadeCountQueryResult> cascadeCountData) {
+
         final Map<String, String> MONTH_TRANSLATIONS = Map.ofEntries(
                 Map.entry("January", "Январь"),
                 Map.entry("February", "Февраль"),
@@ -144,17 +182,16 @@ public class MonitoringCoverageAdapter {
                 .append("<h4>Добрый день!</h4>")
                 .append("<p>В таблицах ниже представлены данные по покрытию.</p>");
 
-        message.append(CommunicationCoverageTableContent(communicationCoverageData));
+        message.append(communicationCoverageTableContent(communicationCoverageData));
         message.append(offerInfoTableContent(offerInfoData));
+        message.append(offerCoverageTableContent(offerCoverageData));
+        message.append(cascadeCountTableContent(cascadeCountData));
 
         message.append("</body></html>");
         return message.toString();
     }
 
-    private String CommunicationCoverageTableContent(List<CommunicationCoverageQueryResult> communicationCoverageData) {
-        if (communicationCoverageData == null || communicationCoverageData.isEmpty()) {
-            return "<tr><td colspan='6'>Нет данных для отображения</td></tr>";
-        }
+    private String communicationCoverageTableContent(List<CommunicationCoverageQueryResult> communicationCoverageData) {
         // Заголовок таблицы
         String tableHeader = "Покрытие коммуникациями";
 
@@ -170,9 +207,16 @@ public class MonitoringCoverageAdapter {
 
         StringBuilder tableContent = new StringBuilder();
 
+        int filedCount = CommunicationCoverageQueryResult.class.getDeclaredFields().length;
+
         tableContent.append("<table border='1'>");
         // Заголовок таблицы
-        tableContent.append("<tr>").append("<th colspan='6' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        tableContent.append("<tr>").append("<th colspan='").append(filedCount).append("' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        // Если нет данных
+        if (communicationCoverageData == null || communicationCoverageData.isEmpty()) {
+            tableContent.append("<tr><td colspan='").append(filedCount).append("'>Нет данных для отображения</td></tr>");
+            return tableContent.toString();
+        }
         // Заголовки столбцов таблицы
         tableContent.append("<tr>");
         for (String header : headers) {
@@ -195,9 +239,6 @@ public class MonitoringCoverageAdapter {
     }
 
     private String offerInfoTableContent(List<OfferInfoQueryResult> offerInfoData) {
-        if (offerInfoData == null || offerInfoData.isEmpty()) {
-            return "<tr><td colspan='7'>Нет данных для отображения</td></tr>";
-        }
         // Заголовок таблицы
         String tableHeader = "Каскадные рассылки и Мейлы по офферу и инфо";
 
@@ -214,9 +255,16 @@ public class MonitoringCoverageAdapter {
 
         StringBuilder tableContent = new StringBuilder();
 
+        int filedCount = OfferInfoQueryResult.class.getDeclaredFields().length;
+
         tableContent.append("<table border='1'>");
         // Заголовок таблицы
-        tableContent.append("<tr>").append("<th colspan='6' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        tableContent.append("<tr>").append("<th colspan='").append(filedCount).append("' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        // Если нет данных
+        if (offerInfoData == null || offerInfoData.isEmpty()) {
+            tableContent.append("<tr><td colspan='").append(filedCount).append("'>Нет данных для отображения</td></tr>");
+            return tableContent.toString();
+        }
         // Заголовоки полей таблицы
         tableContent.append("<tr>");
         for (String header : headers) {
@@ -234,6 +282,92 @@ public class MonitoringCoverageAdapter {
                     .append("<td class=\"amount\">").append(formatAmount(row.getAptekaEmail())).append("</td>")
                     .append("<td class=\"amount\">").append(formatAmount(row.getKfSms())).append("</td>")
                     .append("<td class=\"amount\">").append(formatAmount(row.getKfEmail())).append("</td>")
+                    .append("</tr>");
+        }
+        tableContent.append("</table>");
+
+        return tableContent.toString();
+    }
+
+    private String offerCoverageTableContent(List<OfferCoverageQueryResult> offerCoverageData) {
+        // Заголовок таблицы
+        String tableHeader = "Покрытие офферами";
+
+        // Заголовки столбцов
+        String[] headers = {
+                "Метрика",
+                "ГЗ",
+                "366"
+        };
+
+        StringBuilder tableContent = new StringBuilder();
+
+        int filedCount = OfferCoverageQueryResult.class.getDeclaredFields().length;
+
+        tableContent.append("<table border='1'>");
+        // Заголовок таблицы
+        tableContent.append("<tr>").append("<th colspan='").append(filedCount).append("' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        // Если нет данных
+        if (offerCoverageData == null || offerCoverageData.isEmpty()) {
+            tableContent.append("<tr><td colspan='").append(filedCount).append("'>Нет данных для отображения</td></tr>");
+            return tableContent.toString();
+        }
+        // Заголовоки полей таблицы
+        tableContent.append("<tr>");
+        for (String header : headers) {
+            tableContent.append("<th>").append(header).append("</th>");
+        }
+        tableContent.append("</tr>");
+
+        // Тело таблицы
+        for (OfferCoverageQueryResult row : offerCoverageData) {
+            tableContent.append("<tr>")
+                    .append("<td>").append(escapeHtml(row.getMetricName())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getGzCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getAptekaCount())).append("</td>")
+                    .append("</tr>");
+        }
+        tableContent.append("</table>");
+
+        return tableContent.toString();
+    }
+
+    private String cascadeCountTableContent(List<CascadeCountQueryResult> cascadeCountData) {
+        // Заголовок таблицы
+        String tableHeader = "Колчество отправленных СМС";
+
+        // Заголовки столбцов
+        String[] headers = {
+                "Метрика",
+                "ГЗ",
+                "366"
+        };
+
+        StringBuilder tableContent = new StringBuilder();
+
+        int filedCount = CascadeCountQueryResult.class.getDeclaredFields().length;
+
+        tableContent.append("<table border='1'>");
+        // Заголовок таблицы
+        tableContent.append("<tr>").append("<th colspan='").append(filedCount).append("' class=\"main\">").append(tableHeader).append("</th>").append("</tr>");
+        // Если нет данных
+        if (cascadeCountData == null || cascadeCountData.isEmpty()) {
+            tableContent.append("<tr><td colspan='").append(filedCount).append("'>Нет данных для отображения</td></tr>");
+            return tableContent.toString();
+        }
+        // Заголовоки полей таблицы
+        tableContent.append("<tr>");
+        for (String header : headers) {
+            tableContent.append("<th>").append(header).append("</th>");
+        }
+        tableContent.append("</tr>");
+
+        // Тело таблицы
+        for (CascadeCountQueryResult row : cascadeCountData) {
+            tableContent.append("<tr>")
+                    .append("<td>").append(escapeHtml(row.getMessageDesc())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getGzCount())).append("</td>")
+                    .append("<td class=\"amount\">").append(formatAmount(row.getAptekaCount())).append("</td>")
                     .append("</tr>");
         }
         tableContent.append("</table>");

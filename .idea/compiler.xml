@@ -13,12 +13,22 @@
         <module name="commcoverage" />
         <module name="monitoring.commcoverage" />
       </profile>
+      <profile name="Annotation profile for coverage" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="monitoring.coverage" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="commcoverage" options="-parameters" />
       <module name="monitoring.commcoverage" options="-parameters" />
+      <module name="monitoring.coverage" options="-parameters" />
     </option>
   </component>
 </project>

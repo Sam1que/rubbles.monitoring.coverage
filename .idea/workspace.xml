@@ -5,30 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fb7d509-f8aa-4e63-a8e9-f4906d770c36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/model/CommunicationCoverageQueryResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/model/CascadeCountQueryResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/model/OfferCoverageQueryResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/adapter/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/adapter/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/adapter/MonitoringCommCoverageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/adapter/MonitoringCoverageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/core/CommonException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/core/CommonException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/core/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/core/Consumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/core/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/core/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/core/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/core/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/core/RawMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/core/RawMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/core/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/core/Supplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/db/DbException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/db/DbException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/db/DbService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/db/DbService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/db/DefaultDbConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/db/DefaultDbConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/common/db/QueryProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/common/db/QueryProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/config/CdmDbConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/config/CdmDbConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/config/JdbcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/config/JdbcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/config/ObjectMapperConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/config/ObjectMapperConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/db/DbAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/db/DbAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/commcoverage/model/OfferInfoQueryResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/model/OfferInfoQueryResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/adapter/MonitoringCoverageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/adapter/MonitoringCoverageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/db/DbAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/db/DbAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application-sql.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-sql.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback-spring.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +28,12 @@
     &quot;assignee&quot;: &quot;Sam1que&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Sam1que/rubbles.monitoring.coverage.git&quot;,
-    &quot;accountId&quot;: &quot;fe18a5b5-3ec2-41f4-9994-1b7823340aa7&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Sam1que/rubbles.monitoring.coverage.git",
+    "accountId": "e95915f1-b8c0-4938-8e16-168c68fdc122"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -58,21 +42,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.commcoverage [clean].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Samir Guliev/Documents/Work/Projects/A366/Adapters/rubbles.monitoring.nps&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.commcoverage [clean].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Samir Guliev/Documents/Work/Projects/A366/Adapters/rubbles.monitoring.nps",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.general"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="rubbles.monitoring.coverage.model" />

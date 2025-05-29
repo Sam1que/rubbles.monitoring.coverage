@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rubbles.monitoring.coverage.common.db.DbService;
+import rubbles.monitoring.coverage.model.CascadeCountQueryResult;
 import rubbles.monitoring.coverage.model.CommunicationCoverageQueryResult;
+import rubbles.monitoring.coverage.model.OfferCoverageQueryResult;
 import rubbles.monitoring.coverage.model.OfferInfoQueryResult;
 
 import java.util.HashMap;
@@ -30,6 +32,12 @@ public class DbAdapter {
 
     @Value("${sql.select-offer-info-query}")
     private String selectOfferInfoQuery;
+
+    @Value("${sql.select-offer-coverage-query}")
+    private String selectOfferCoverageQuery;
+
+    @Value("${sql.select-cascade-count-query}")
+    private String selectCascadeCountQuery;
 
     @Value("${sql.select-recipients-query}")
     private String selectRecipientsQuery;
@@ -71,6 +79,34 @@ public class DbAdapter {
                     (Long) row.get("366_EMAIL"),
                     (Long) row.get("KF_SMS"),
                     (Long) row.get("KF_EMAIL")
+            )).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Error selecting data from database" + e.getMessage());
+        }
+    }
+
+    public List<OfferCoverageQueryResult> selectOfferCoverageData() throws Exception {
+        try {
+            String query = selectOfferCoverageQuery;
+            List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
+            return rows.stream().map(row -> new OfferCoverageQueryResult(
+                    (String) row.get("METRIC"),
+                    (Long) row.get("GZ"),
+                    (Long) row.get("A366")
+            )).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Error selecting data from database" + e.getMessage());
+        }
+    }
+
+    public List<CascadeCountQueryResult> selectCascadeCountData() throws Exception {
+        try {
+            String query = selectCascadeCountQuery;
+            List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
+            return rows.stream().map(row -> new CascadeCountQueryResult(
+                    (String) row.get("MESSAGE_DESC"),
+                    (Long) row.get("GZ"),
+                    (Long) row.get("366")
             )).collect(Collectors.toList());
         } catch (Exception e) {
             throw new Exception("Error selecting data from database" + e.getMessage());
