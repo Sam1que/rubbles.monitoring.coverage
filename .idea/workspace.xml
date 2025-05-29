@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fb7d509-f8aa-4e63-a8e9-f4906d770c36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/model/CascadeCountQueryResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/model/OfferCoverageQueryResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1fb7d509-f8aa-4e63-a8e9-f4906d770c36" name="Changes" comment="Added all metrics (4/4)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/adapter/MonitoringCoverageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/adapter/MonitoringCoverageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/db/DbAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rubbles/monitoring/coverage/db/DbAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-sql.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-sql.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +22,12 @@
     &quot;assignee&quot;: &quot;Sam1que&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Sam1que/rubbles.monitoring.coverage.git",
-    "accountId": "e95915f1-b8c0-4938-8e16-168c68fdc122"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Sam1que/rubbles.monitoring.coverage.git&quot;,
+    &quot;accountId&quot;: &quot;e95915f1-b8c0-4938-8e16-168c68fdc122&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -42,21 +36,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.commcoverage [clean].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Samir Guliev/Documents/Work/Projects/A366/Adapters/rubbles.monitoring.nps",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.general"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.commcoverage [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.coverage [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.coverage [compile].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Samir Guliev/Documents/Work/Projects/A366/Adapters/rubbles.monitoring.nps&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="rubbles.monitoring.coverage.model" />
@@ -84,6 +80,15 @@
       <option name="presentableId" value="Default" />
       <updated>1748251418484</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added all metrics (4/4)">
+      <option name="closed" value="true" />
+      <created>1748533701861</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1748533701861</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -96,5 +101,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added all metrics (4/4)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added all metrics (4/4)" />
   </component>
 </project>
