@@ -1,5 +1,5 @@
 sql:
-  select-recipients-query: select email from &monitoring_recipients where comm_coverage = 1;
+  select-recipients-query: select email from &monitoring_recipients where coverage = 1;
   select-communication-coverage-query: ${SQL_COMMUNICATION_COVERAGE_QUERY}
   select-offer-info-query: ${SQL_OFFER_INFO_QUERY}
   select-offer-coverage-query: ${SQL_OFFER_COVERAGE_QUERY}
