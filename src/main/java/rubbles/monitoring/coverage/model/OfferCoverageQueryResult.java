@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class OfferCoverageQueryResult {
-    private String metricName;
-    private Long gzCount;
-    private Long aptekaCount;
+    private String brand;
+    private Long offerCount;
+    private Long uniqueClientCount;
+    private Long clientBase;
+    private String coverage;
 }

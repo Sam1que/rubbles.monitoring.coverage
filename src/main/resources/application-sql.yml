@@ -1,6 +1,6 @@
 sql:
   select-recipients-query: select email from &monitoring_recipients where coverage = 1;
+  select-available-client-base-query: ${SQL_AVAILABLE_CLIENT_BASE_QUERY}
   select-communication-coverage-query: ${SQL_COMMUNICATION_COVERAGE_QUERY}
-  select-offer-info-query: ${SQL_OFFER_INFO_QUERY}
   select-offer-coverage-query: ${SQL_OFFER_COVERAGE_QUERY}
   select-cascade-count-query: ${SQL_CASCADE_COUNT_QUERY}

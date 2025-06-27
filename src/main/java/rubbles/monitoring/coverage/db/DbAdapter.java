@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rubbles.monitoring.coverage.common.db.DbService;
 import rubbles.monitoring.coverage.model.CascadeCountQueryResult;
-import rubbles.monitoring.coverage.model.CommunicationCoverageQueryResult;
+import rubbles.monitoring.coverage.model.AvailableClientBaseQueryResult;
 import rubbles.monitoring.coverage.model.OfferCoverageQueryResult;
-import rubbles.monitoring.coverage.model.OfferInfoQueryResult;
+import rubbles.monitoring.coverage.model.CommunicationCoverageQueryResult;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +28,11 @@ public class DbAdapter {
     @Value("${db.tables.monitoring-recipients}")
     private String MONITORING_RECIPIENTS;
 
+    @Value("${sql.select-available-client-base-query}")
+    private String selectAvailableClientBaseQuery;
+
     @Value("${sql.select-communication-coverage-query}")
     private String selectCommunicationCoverageQuery;
-
-    @Value("${sql.select-offer-info-query}")
-    private String selectOfferInfoQuery;
 
     @Value("${sql.select-offer-coverage-query}")
     private String selectOfferCoverageQuery;
@@ -50,35 +51,38 @@ public class DbAdapter {
         }
     }
 
-    public List<CommunicationCoverageQueryResult> selectCommunicationCoverageData() throws Exception {
+    public List<AvailableClientBaseQueryResult> selectAvailableClientBaseData() throws Exception {
         try {
-            String query = selectCommunicationCoverageQuery;
+            String query = selectAvailableClientBaseQuery;
             List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
-            return rows.stream().map(row -> new CommunicationCoverageQueryResult(
-                    (Long) row.get("GZ_SMS_COUNT"),
-                    (Long) row.get("GZ_EMAIL_COUNT"),
-                    (Long) row.get("366_SMS_COUNT"),
-                    (Long) row.get("366_EMAIL_COUNT"),
-                    (Long) row.get("KF_SMS_COUNT"),
-                    (Long) row.get("KF_EMAIL_COUNT")
+            return rows.stream().map(row -> new AvailableClientBaseQueryResult(
+                    (String) row.get("brand"),
+                    (Long) row.get("total_clients"),
+                    (Long) row.get("available_clients"),
+                    (Long) row.get("email_count"),
+                    (Long) row.get("sms_count"),
+                    (Long) row.get("email_and_sms_count"),
+                    (String) row.get("email_percentage"),
+                    (String) row.get("sms_percentage"),
+                    (String) row.get("email_and_sms_percentage")
             )).collect(Collectors.toList());
         } catch (Exception e) {
             throw new Exception("Error selecting data from database" + e.getMessage());
         }
     }
 
-    public List<OfferInfoQueryResult> selectOfferInfoData() throws Exception {
+    public List<CommunicationCoverageQueryResult> selectCommunicationCoverageData() throws Exception {
         try {
-            String query = selectOfferInfoQuery;
+            String query = selectCommunicationCoverageQuery;
             List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
-            return rows.stream().map(row -> new OfferInfoQueryResult(
-                    (String) row.get("METRIC_NAME"),
-                    (Long) row.get("GZ_SMS"),
-                    (Long) row.get("GZ_EMAIL"),
-                    (Long) row.get("366_SMS"),
-                    (Long) row.get("366_EMAIL"),
-                    (Long) row.get("KF_SMS"),
-                    (Long) row.get("KF_EMAIL")
+            return rows.stream().map(row -> new CommunicationCoverageQueryResult(
+                    (String) row.get("brand"),
+                    (String) row.get("type"),
+                    (String) row.get("channel"),
+                    (Long) row.get("client_count"),
+                    (Long) row.get("unique_client_count"),
+                    (BigDecimal) row.get("communications_per_client"),
+                    (String) row.get("coverage")
             )).collect(Collectors.toList());
         } catch (Exception e) {
             throw new Exception("Error selecting data from database" + e.getMessage());
@@ -90,9 +94,11 @@ public class DbAdapter {
             String query = selectOfferCoverageQuery;
             List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
             return rows.stream().map(row -> new OfferCoverageQueryResult(
-                    (String) row.get("METRIC"),
-                    (Long) row.get("GZ"),
-                    (Long) row.get("A366")
+                    (String) row.get("brand"),
+                    (Long) row.get("offer_count"),
+                    (Long) row.get("unique_client_count"),
+                    (Long) row.get("client_base"),
+                    (String) row.get("coverage")
             )).collect(Collectors.toList());
         } catch (Exception e) {
             throw new Exception("Error selecting data from database" + e.getMessage());
@@ -106,7 +112,8 @@ public class DbAdapter {
             return rows.stream().map(row -> new CascadeCountQueryResult(
                     (String) row.get("MESSAGE_DESC"),
                     (Long) row.get("GZ"),
-                    (Long) row.get("366")
+                    (Long) row.get("366"),
+                    (Long) row.get("total")
             )).collect(Collectors.toList());
         } catch (Exception e) {
             throw new Exception("Error selecting data from database" + e.getMessage());

@@ -9,4 +9,5 @@ public class CascadeCountQueryResult {
     private String messageDesc;
     private Long gzCount;
     private Long aptekaCount;
+    private Long total;
 }
