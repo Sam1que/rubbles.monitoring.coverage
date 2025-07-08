@@ -8,7 +8,10 @@ import lombok.Getter;
 public class OfferCoverageQueryResult {
     private String brand;
     private Long offerCount;
-    private Long uniqueClientCount;
-    private Long clientBase;
-    private String coverage;
+    private Long uniqueClientsWithOffer;
+    private Long offersWithComm;
+    private Long uniqueClientsWithOfferAndComm;
+    private Long availableBase;
+    private String offerCoverage;
+    private String offerWithCommCoverage;
 }

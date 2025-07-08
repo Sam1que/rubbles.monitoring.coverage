@@ -10,6 +10,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Properties;
 
 @Service
@@ -27,6 +30,9 @@ public class EmailService {
 
     @Value("${smtp.password}")
     private String password;
+
+    private static final DateTimeFormatter MONTH_FORMATTER =
+            DateTimeFormatter.ofPattern("LLLL", new Locale("ru"));
 
     public void sendEmail(String email, String htmlBody) throws Exception {
         try {
@@ -46,6 +52,9 @@ public class EmailService {
                 }
             });
 
+            String rawMonthName = LocalDate.now().format(MONTH_FORMATTER);
+            String capitalizedMonthName = rawMonthName.substring(0, 1).toUpperCase() + rawMonthName.substring(1);
+
             Message msg = new MimeMessage(session);
 
             msg.setFrom(new InternetAddress(userName));
@@ -53,7 +62,7 @@ public class EmailService {
             InternetAddress[] toAddresses = {new InternetAddress(email)};
 
             msg.setRecipients(Message.RecipientType.TO, toAddresses);
-            msg.setSubject("Отчет по покрытию");
+            msg.setSubject("Отчет по покрытию за " + capitalizedMonthName);
             msg.setSentDate(new java.util.Date());
 
             msg.setContent(htmlBody, "text/html; charset=utf-8");
@@ -82,6 +91,9 @@ public class EmailService {
                 }
             });
 
+            String rawMonthName = LocalDate.now().format(MONTH_FORMATTER);
+            String capitalizedMonthName = rawMonthName.substring(0, 1).toUpperCase() + rawMonthName.substring(1);
+
             Message msg = new MimeMessage(session);
 
             msg.setFrom(new InternetAddress(userName));
@@ -89,7 +101,7 @@ public class EmailService {
             InternetAddress[] toAddresses = {new InternetAddress(email)};
 
             msg.setRecipients(Message.RecipientType.TO, toAddresses);
-            msg.setSubject("ОШИБКА Отчет по покрытию");
+            msg.setSubject("ОШИБКА Отчет по покрытию за " + capitalizedMonthName);
             msg.setSentDate(new java.util.Date());
 
             msg.setContent("При отправке отчета по покрытию произошла ошибка<br><br>", "text/html; charset=utf-8");

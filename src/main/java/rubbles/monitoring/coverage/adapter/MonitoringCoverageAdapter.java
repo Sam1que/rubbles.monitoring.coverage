@@ -97,12 +97,15 @@ public class MonitoringCoverageAdapter {
                 if (!offerCoverageData.isEmpty()) {
                     log.info("Successfully received offer coverage data ({} records).", offerCoverageData.size());
                     for (OfferCoverageQueryResult row : offerCoverageData) {
-                        log.debug("Brand: {}, Offer count: {}, Unique client count: {}, Client base: {}, Coverage: {}",
+                        log.debug("Brand: {}, Offer count: {}, Unique clients with offer: {}, Offers with comm: {}, Unique clients with offer and comm: {}, Available base: {}, Offer coverage: {}, Offer with comm coverage: {}",
                                 row.getBrand(),
                                 row.getOfferCount(),
-                                row.getUniqueClientCount(),
-                                row.getClientBase(),
-                                row.getCoverage()
+                                row.getUniqueClientsWithOffer(),
+                                row.getOffersWithComm(),
+                                row.getUniqueClientsWithOfferAndComm(),
+                                row.getAvailableBase(),
+                                row.getOfferCoverage(),
+                                row.getOfferWithCommCoverage()
                         );
                     }
                 } else {
@@ -203,7 +206,7 @@ public class MonitoringCoverageAdapter {
                 .append("  td.amount { text-align: right; }")
                 .append("</style></head><body>")
                 .append("<h4>Добрый день!</h4>")
-                .append("<p>В таблицах ниже представлены данные по покрытию.</p>");
+                .append("<p>В таблицах ниже представлены данные по покрытию за текущий месяц:</p>");
 
         message.append(availableClientBaseTableContent(availableClientBaseData));
         message.append(communicationCoverageTableContent(communicationCoverageData));
@@ -308,8 +311,11 @@ public class MonitoringCoverageAdapter {
                 "Бренд",
                 "Количество офферов",
                 "Количество уникальных клиентов с оффером",
+                "Количество офферов с коммуникацией",
+                "Количество уникальных клиентов с оффером и коммуникацией",
                 "Доступная база",
-                "Покрытие"
+                "Покрытие по офферам",
+                "Покрытие по офферам с коммуникацией"
         };
         StringBuilder tableContent = new StringBuilder();
         int displayedColumnCount = headers.length;
@@ -327,9 +333,12 @@ public class MonitoringCoverageAdapter {
                 tableContent.append("<tr>")
                         .append("<td>").append(escapeHtml(row.getBrand())).append("</td>")
                         .append("<td class=\"amount\">").append(formatAmount(row.getOfferCount())).append("</td>")
-                        .append("<td class=\"amount\">").append(formatAmount(row.getUniqueClientCount())).append("</td>")
-                        .append("<td class=\"amount\">").append(formatAmount(row.getClientBase())).append("</td>")
-                        .append("<td>").append(escapeHtml(row.getCoverage())).append("</td>")
+                        .append("<td class=\"amount\">").append(formatAmount(row.getUniqueClientsWithOffer())).append("</td>")
+                        .append("<td class=\"amount\">").append(formatAmount(row.getOffersWithComm())).append("</td>")
+                        .append("<td class=\"amount\">").append(formatAmount(row.getUniqueClientsWithOfferAndComm())).append("</td>")
+                        .append("<td class=\"amount\">").append(formatAmount(row.getAvailableBase())).append("</td>")
+                        .append("<td>").append(escapeHtml(row.getOfferCoverage())).append("</td>")
+                        .append("<td>").append(escapeHtml(row.getOfferWithCommCoverage())).append("</td>")
                         .append("</tr>");
             }
         }
