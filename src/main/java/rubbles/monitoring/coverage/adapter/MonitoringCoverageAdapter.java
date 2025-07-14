@@ -77,7 +77,7 @@ public class MonitoringCoverageAdapter {
                                 row.getBrand(),
                                 row.getType(),
                                 row.getChannel(),
-                                row.getClientCount(),
+                                row.getCommCount(),
                                 row.getUniqueClientCount(),
                                 row.getCommunicationsPerClient(),
                                 row.getCoverage()
@@ -206,7 +206,9 @@ public class MonitoringCoverageAdapter {
                 .append("  td.amount { text-align: right; }")
                 .append("</style></head><body>")
                 .append("<h4>Добрый день!</h4>")
-                .append("<p>В таблицах ниже представлены данные по покрытию за текущий месяц:</p>");
+                .append("<p>В таблицах ниже представлены данные по покрытию за текущий месяц.</p>")
+                .append("<p>Доступные клиенты: Клиенты, не входящие в ГКГ.</p>")
+                .append("<p>Покрытие = Количество уникальных клиентов c коммуникацией / Доступность соответствующего канала.</p>");
 
         message.append(availableClientBaseTableContent(availableClientBaseData));
         message.append(communicationCoverageTableContent(communicationCoverageData));
@@ -225,10 +227,10 @@ public class MonitoringCoverageAdapter {
                 "Доступные клиенты",
                 "Доступен EMAIL",
                 "Доступен SMS",
-                "Доступен EMAIL и SMS",
+                "Доступен EMAIL или SMS",
                 "Доля EMAIL от доступных",
                 "Доля SMS от доступных",
-                "Доля EMAIL и SMS от доступных"
+                "Доля EMAIL или SMS от доступных"
         };
         StringBuilder tableContent = new StringBuilder();
         int displayedColumnCount = headers.length;
@@ -294,7 +296,7 @@ public class MonitoringCoverageAdapter {
                         .append("<td>").append(escapeHtml(row.getBrand())).append("</td>")
                         .append("<td>").append(escapeHtml(row.getType())).append("</td>")
                         .append("<td>").append(escapeHtml(row.getChannel())).append("</td>")
-                        .append("<td class=\"amount\">").append(formatAmount(row.getClientCount())).append("</td>")
+                        .append("<td class=\"amount\">").append(formatAmount(row.getCommCount())).append("</td>")
                         .append("<td class=\"amount\">").append(formatAmount(row.getUniqueClientCount())).append("</td>")
                         .append("<td class=\"amount\">").append(row.getCommunicationsPerClient()).append("</td>")
                         .append("<td>").append(escapeHtml(row.getCoverage())).append("</td>")
@@ -309,11 +311,11 @@ public class MonitoringCoverageAdapter {
         String tableHeader = "Покрытие офферами";
         String[] headers = {
                 "Бренд",
+                "Доступная база",
                 "Количество офферов",
                 "Количество уникальных клиентов с оффером",
                 "Количество офферов с коммуникацией",
                 "Количество уникальных клиентов с оффером и коммуникацией",
-                "Доступная база",
                 "Покрытие по офферам",
                 "Покрытие по офферам с коммуникацией"
         };
@@ -332,11 +334,11 @@ public class MonitoringCoverageAdapter {
             for (OfferCoverageQueryResult row : offerCoverageData) {
                 tableContent.append("<tr>")
                         .append("<td>").append(escapeHtml(row.getBrand())).append("</td>")
+                        .append("<td class=\"amount\">").append(formatAmount(row.getAvailableBase())).append("</td>")
                         .append("<td class=\"amount\">").append(formatAmount(row.getOfferCount())).append("</td>")
                         .append("<td class=\"amount\">").append(formatAmount(row.getUniqueClientsWithOffer())).append("</td>")
                         .append("<td class=\"amount\">").append(formatAmount(row.getOffersWithComm())).append("</td>")
                         .append("<td class=\"amount\">").append(formatAmount(row.getUniqueClientsWithOfferAndComm())).append("</td>")
-                        .append("<td class=\"amount\">").append(formatAmount(row.getAvailableBase())).append("</td>")
                         .append("<td>").append(escapeHtml(row.getOfferCoverage())).append("</td>")
                         .append("<td>").append(escapeHtml(row.getOfferWithCommCoverage())).append("</td>")
                         .append("</tr>");

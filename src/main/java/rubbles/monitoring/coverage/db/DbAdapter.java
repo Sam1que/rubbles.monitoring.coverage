@@ -79,7 +79,7 @@ public class DbAdapter {
                     (String) row.get("brand"),
                     (String) row.get("type"),
                     (String) row.get("channel"),
-                    (Long) row.get("client_count"),
+                    (Long) row.get("comm_count"),
                     (Long) row.get("unique_client_count"),
                     (BigDecimal) row.get("communications_per_client"),
                     (String) row.get("coverage")
@@ -95,11 +95,11 @@ public class DbAdapter {
             List<Map<String, Object>> rows = cdmDbService.select(query, new HashMap<>());
             return rows.stream().map(row -> new OfferCoverageQueryResult(
                     (String) row.get("brand"),
+                    (Long) row.get("available_base"),
                     (Long) row.get("offer_count"),
                     (Long) row.get("unique_clients_with_offer"),
                     (Long) row.get("offers_with_comm"),
                     (Long) row.get("unique_clients_with_offer_and_comm"),
-                    (Long) row.get("available_base"),
                     (String) row.get("offer_coverage"),
                     (String) row.get("offer_with_comm_coverage")
             )).collect(Collectors.toList());
